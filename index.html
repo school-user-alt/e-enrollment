@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>  
+    <meta charset="utf-8" />
+    <title>E-ENROLL</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="icon" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===================== MAIN CONTAINER ===================== -->
+    <div class="container" role="main" id="mainContainer">
+
+        <!-- ===================== LEFT PANEL (LOGIN) ===================== -->
+        <div class="panel" aria-labelledby="panelTitle">
+            <h1 id="panelTitle" class="panel-title">
+                <img src="logo.png" alt="Logo" class="panel-logo">
+                Enrollment Portal
+            </h1>
+            <p class="lead">
+                Sign in to start enrollment or continue where you left off.
+                This demo stores progress in your browser only.
+            </p>
+            <div id="authArea">
+                <form id="loginForm" onsubmit="return false;">
+                    <label for="username">Email</label>
+                    <input id="username" class="input" placeholder="email" required>
+
+                    <label for="password">Password</label>
+                    <input id="password" type="password" class="input" placeholder="password" required>
+
+                    <div style="display:flex;gap:8px;margin-top:8px">
+                        <button class="btn" id="loginBtn">Login</button>
+                        <button class="btn ghost" id="clearBtn" type="button">Clear</button>
+                    </div>
+                </form>
+
+                <div class="status" id="status">Not signed in.</div>
+            </div>
+
+            <div style="margin-top:12px">
+                <h2 style="font-size:14px;margin:0 0 8px">Instructions</h2>
+                <p class="muted" style="margin:0">
+                    1) Login. 
+                    2) Fill enrollment details and check requirements. 
+                    3) Upload birth certificate and grade images (Grade 9 & 10). 
+                    4) Submit — the final screen shows strand enrollment counts.
+                </p>
+            </div>
+
+            <footer>This is a client-only prototype. Files are not sent anywhere.</footer>
+        </div>
+
+        <!-- ===================== RIGHT SIDE: STEPS / FORMS ===================== -->
+        <div class="steps" aria-labelledby="stepsTitle">
+            <h1 id="stepsTitle">Enrollment Steps</h1>
+            <div class="stepper" aria-hidden="false">
+                <div class="step active" id="s0">1 — Login</div>
+                <div class="step" id="s1">2 — Requirements</div>
+                <div class="step" id="s2">3 — Upload Documents</div>
+                <div class="step" id="s3">4 — Confirm & Submit</div>
+            </div>
+
+            <div id="formsContainer">
+                <!-- STEP 0: LOGIN REMINDER -->
+                <div class="stepPanel active" id="step-0">
+                    <p class="muted">
+                        You must be signed in to enroll.
+                        Use the left panel to sign in. Any non-empty credentials work for this demo.
+                    </p>
+
+                    <div class="nav">
+                        <div></div>
+                        <div><button class="btn" id="startBtn" disabled>Start Enrollment</button></div>
+                    </div>
+                </div>
+
+                <!-- STEP 1: REQUIREMENTS + PERSONAL INFORMATION FORM -->
+                <div class="stepPanel" id="step-1">
+                    <form id="enrollForm" onsubmit="return false;">
+                        <label>Full Name</label>
+                        <input id="fullName" class="input" required>
+
+                        <div class="row">
+                            <div class="col">
+                                <label>Birthdate</label>
+                                <input id="birthdate" type="date" class="input" required>
+                            </div>
+                            <div class="col">
+                                <label>Contact No.</label>
+                                <input id="contact" class="input" placeholder="+63..." pattern=".{7,}" required>
+                            </div>
+                        </div>
+
+                        <label>Address</label>
+                        <input id="address" class="input" required>
+
+                        <div class="row">
+                            <div class="col">
+                                <label>Last School Attended</label>
+                                <input id="school" class="input" required>
+                            </div>
+                            <div class="col">
+                                <label>Select Strand</label>
+                                <select id="strand" class="select" required>
+                                    <option value="">-- choose strand --</option>
+                                    <option>STEM</option>
+                                    <option>ABM</option>
+                                    <option>HUMSS</option>
+                                    <option>TVL</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label>Enrollment Requirements — tick when you have the document</label>
+                            <div class="req-list">
+                                <label><input type="checkbox" id="req-bc"> Birth Certificate (original or certified true copy)</label>
+                                <label><input type="checkbox" id="req-grades"> Grades (Grade 9 & Grade 10)</label>
+                                <label><input type="checkbox" id="req-id"> Parent/Guardian ID</label>
+                            </div>
+                        </div>
+
+                        <div class="nav">
+                            <button class="btn ghost" id="backFrom1">Back</button>
+                            <div>
+                                <button class="btn" id="toUpload">Next: Upload</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- STEP 2: FILE UPLOADS -->
+                <div class="stepPanel" id="step-2">
+                    <div>
+                        <label>Upload Birth Certificate (image)</label>
+                        <div class="file-drop" id="drop-bc" tabindex="0">
+                            <input id="fileBC" type="file" accept="image/*" style="display:none">
+                            <div>Drag & drop or click to select image</div>
+                            <div class="thumbs" id="thumb-bc"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Upload Grade 9 (image)</label>
+                        <div class="file-drop" id="drop-g9" tabindex="0">
+                            <input id="fileG9" type="file" accept="image/*" style="display:none">
+                            <div>Drag & drop or click to select image</div>
+                            <div class="thumbs" id="thumb-g9"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Upload Grade 10 (image)</label>
+                        <div class="file-drop" id="drop-g10" tabindex="0">
+                            <input id="fileG10" type="file" accept="image/*" style="display:none">
+                            <div>Drag & drop or click to select image</div>
+                            <div class="thumbs" id="thumb-g10"></div>
+                        </div>
+                    </div>
+
+                    <div class="nav">
+                        <button class="btn ghost" id="backFrom2">Back</button>
+                        <div><button class="btn" id="toSummary">Next: Confirm</button></div>
+                    </div>
+
+                    <p class="muted">
+                        Images are previewed locally. Max size per file ~5MB (enforced).
+                    </p>
+                </div>
+
+                <!-- STEP 3: FINAL CONFIRMATION -->
+                <div class="stepPanel" id="step-3">
+                    <h2 style="margin:0 0 6px">Confirm Enrollment</h2>
+                    <div id="summary" style="border-radius:8px; padding:10px; background:rgba(255,255,255,0.01)"></div>
+                    <div style="margin-top:12px">
+                        <h3 style="margin:0 0 8px">Current Enrollments by Strand</h3>
+                        <div id="countsArea" class="counts" aria-live="polite"></div>
+                    </div>
+                    <div class="nav">
+                        <button class="btn ghost" id="backFrom3">Back</button>
+                        <div><button class="btn" id="submitEnroll">Submit Enrollment</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
